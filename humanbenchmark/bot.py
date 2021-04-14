@@ -6,10 +6,13 @@ from dataclasses import dataclass, field
 from time import sleep
 
 from rich.console import Console
-
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from webdriver_manager.chrome import ChromeDriverManager
+
+from tests.test import Test
+from tests.memory import Memory
+
 
 # Constants
 @dataclass  # We use a dataclass instead of dict simply so we can access values
@@ -17,6 +20,13 @@ class Endpoints:  # as attributes instead of keys, I think it looks better :)
     login: str = "login"
     dashboard: str = "dashboard"
     test: str = "tests"
+    test_list: OrderedDict[str, Test] = field(
+        default_factory=lambda: OrderedDict(
+            (("memory", Memory),),
+        )
+    )
+
+
 URL = "https://humanbenchmark.com"
 ENDPOINTS = Endpoints()
 
@@ -25,6 +35,8 @@ class Bot:
     def __init__(self):
         self.browser = webdriver.Chrome(ChromeDriverManager().install())
         self.console = Console()
+
+        self.browser.get(URL)
 
     def __enter__(self):
         return self
@@ -47,8 +59,11 @@ class Bot:
             self.login()
         else:
             self.console.print("Continuing with anonymous session")
-            self.browser.get(f"{URL}/{ENDPOINTS.dashboard}")
 
+        while True:
+            if self.browser.current_url != f"{URL}/{ENDPOINTS.dashboard}":
+                self.browser.get(f"{URL}/{ENDPOINTS.dashboard}")
+            self.test_select()
 
     def login(self):
         self.browser.get(f"{URL}/{ENDPOINTS.login}")
@@ -71,7 +86,7 @@ class Bot:
             ).click()
 
             sleep(1)
-            error = self.browser.find_elements_by_class_name("login-error-message")
+            error = self.browser.find_element_by_css_selector(".login-error-message")
 
             if not error:
                 self.console.print(
@@ -95,6 +110,39 @@ class Bot:
 
         self.console.print("Try logging in again...")
 
+    def test_select(self):
+        self.console.print("[u]Available Tests[/u]")
+        for i, test in enumerate(ENDPOINTS.test_list.keys(), 1):
+            self.console.print(f"\t[b]{i}.[/b] {test.title()}")
+
+        selected_test = (
+            self.console.input(
+                "Select a test to take: "
+                f"[bright_black](1-{len(ENDPOINTS.test_list)})[/bright_black] "
+            )
+            .strip()
+            .lower()
+        )
+
+        if selected_test.isdigit():
+            selected_index = int(selected_test)
+            if selected_index not in range(1, len(ENDPOINTS.test_list) + 1):
+                self.console.print("[red]Invalid number[/red]")
+                return False
+
+            selected_text = list(ENDPOINTS.test_list.keys())[selected_index - 1]
+        elif selected_test not in ENDPOINTS.test_list.keys():
+            self.console.print(f"[red]No test named {selected_test} available[/red]")
+            return False
+
+        self.browser.get(f"{URL}/{ENDPOINTS.test}/{selected_text}")
+
+        # Spawn test handler in seperate thread and wait for esc to cancel or return
+        test_instance = ENDPOINTS.test_list[selected_text](self.browser, self.console)
+        test_instance.start()
+        del test_instance
+
+        return True
 
     @staticmethod
     def clear_field(field):
