@@ -39,10 +39,10 @@ class Bot:
                 "[bright_black](y/[u]N[/u])[/bright_black] "
             )
             .strip()
-            .lower()[0]
+            .lower()
         )
 
-        if login == "y":
+        if login and login[0] == "y":
             self.console.print("Redirecting to login page...")
             self.login()
         else:
@@ -81,15 +81,19 @@ class Bot:
                 return True
 
             self.console.print("[red]Failed to login![red]")
-            retry = self.console.input(
-                "Continue without logging in? "
-                "[bright_black]([u]Y[/u]/n)[/bright_black] "
+            retry = (
+                self.console.input(
+                    "Continue without logging in? "
+                    "[bright_black]([u]Y[/u]/n)[/bright_black] "
+                )
+                .strip()
+                .lower()
             )
 
-        if retry.strip().lower()[0] == "y":
+        if retry and retry[0] != "n":
             return False
-        else:
-            self.console.print("Try logging in again...")
+
+        self.console.print("Try logging in again...")
 
 
     @staticmethod
