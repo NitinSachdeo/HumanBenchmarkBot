@@ -27,7 +27,7 @@ class Reaction(Test):
 
             sleep(0.5)
             time_div = self.browser.find_elements_by_css_selector(
-                f"{self.result_parent_selector} > h1 > div"
+                f"{self.result_selector} > div"
             )
 
             if time_div:
@@ -40,7 +40,7 @@ class Reaction(Test):
 
         sleep(0.5)
         overall = self.browser.find_element_by_css_selector(
-            f"{self.result_parent_selector} > h1"
+            f"{self.result_selector}"
         ).text[:-2]
 
         times.append((5 * int(overall)) - sum(times))

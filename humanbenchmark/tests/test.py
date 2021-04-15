@@ -2,6 +2,7 @@
 
 from abc import ABC, abstractclassmethod
 from threading import Thread
+from time import sleep
 import keyboard
 
 from rich.console import Console
@@ -12,7 +13,7 @@ class Test(ABC):
     tile_selector = "div.square"
     button_selector = ".css-de05nr.e19owgy710"
     save_button_selector = ".css-qm6rs9.e19owgy710"
-    result_selector = ".css-1qvtbrk.e19owgy78"
+    result_selector = ".css-1qvtbrk.e19owgy78 > h1"
 
     def __init__(self, browser: webdriver.Chrome, console: Console):
         self.browser = browser
@@ -32,6 +33,8 @@ class Test(ABC):
     def start(self):
         if not self.run():
             return
+
+        sleep(1)  # Time to allow save button to load
 
         save = (
             self.console.input(
