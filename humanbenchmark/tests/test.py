@@ -10,6 +10,8 @@ from selenium import webdriver
 
 class Test(ABC):
     button_selector = ".css-de05nr.e19owgy710"
+    save_button_selector = ".css-qm6rs9.e19owgy710"
+    result_selector = ".css-1qvtbrk.e19owgy78"
 
     def __init__(self, browser: webdriver.Chrome, console: Console):
         self.browser = browser
@@ -42,7 +44,7 @@ class Test(ABC):
         if save and save[0] == "n":
             return False
 
-        self.browser.find_element_by_css_selector(".css-qm6rs9.e19owgy710").click()
+        self.browser.find_element_by_css_selector(self.save_button_selector).click()
         return True
 
     @abstractclassmethod
