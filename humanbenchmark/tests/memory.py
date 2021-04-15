@@ -7,8 +7,8 @@ from .test import Test
 
 
 class Memory(Test):
-    tile_selector = "div.square-row div"
     score_div_text_selector = "//div[starts-with(string(), '{0}') and @class='score']"
+    max_level = 100
 
     def run(self):
         self.detect_stop_thread()
@@ -19,7 +19,7 @@ class Memory(Test):
 
         # Level loop
         # Add max since it's unable to read all squares to click around level 118
-        for level in range(1, 101):
+        for level in range(1, self.max_level + 1):
             sleep(0.5)  # Wait half a second for squares to light up
             squares = self.browser.find_elements_by_css_selector(self.tile_selector)
 
@@ -37,12 +37,11 @@ class Memory(Test):
             for square in filter(None, squares):
                 square.click()
 
-            level += 1
             level_div = self.browser.find_element_by_xpath(
                 self.score_div_text_selector.format("Level:")
             )
-            # Wait till level counter increments
-            while int(level_div.text.split(" ")[-1]) != level:
+            # Wait till level counter increments to next level
+            while int(level_div.text.split(" ")[-1]) != level + 1:
                 sleep(0.1)
 
             if self.stop_pressed:
