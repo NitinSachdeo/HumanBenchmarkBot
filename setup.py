@@ -6,7 +6,7 @@ from setuptools import setup, find_packages
 with open("README.md") as readme_file:
     readme = readme_file.read()
 
-requirements = []
+requirements = ["keyboard", "rich", "selenium", "webdriver_manager"]
 
 setup(
     author="Nitin Sachdeo",
