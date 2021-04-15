@@ -10,15 +10,8 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from webdriver_manager.chrome import ChromeDriverManager
 
+from tests import Aim, Chimp, Memory, Number, Reaction, Sequence, Typing, Verbal
 from tests.test import Test
-from tests.memory import Memory
-from tests.reaction import Reaction
-from tests.typing import Typing
-from tests.chimp import Chimp
-from tests.sequence import Sequence
-from tests.number import Number
-from tests.verbal import Verbal
-from tests.aim import Aim
 
 
 # Constants
@@ -30,14 +23,14 @@ class Endpoints:  # as attributes instead of keys, I think it looks better :)
     test_list: OrderedDict[str, Test] = field(
         default_factory=lambda: OrderedDict(
             (
-                ("memory", Memory),
-                ("reactiontime", Reaction),
-                ("typing", Typing),
-                ("chimp", Chimp),
-                ("sequence", Sequence),
-                ("number-memory", Number),
-                ("verbal-memory", Verbal),
                 ("aim", Aim),
+                ("chimp", Chimp),
+                ("memory", Memory),
+                ("number-memory", Number),
+                ("reactiontime", Reaction),
+                ("sequence", Sequence),
+                ("typing", Typing),
+                ("verbal-memory", Verbal),
             )
         )
     )
