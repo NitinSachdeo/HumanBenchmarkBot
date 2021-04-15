@@ -15,6 +15,7 @@ from tests.memory import Memory
 from tests.reaction import Reaction
 from tests.typing import Typing
 from tests.chimp import Chimp
+from tests.sequence import Sequence
 
 
 # Constants
@@ -30,6 +31,7 @@ class Endpoints:  # as attributes instead of keys, I think it looks better :)
                 ("reactiontime", Reaction),
                 ("typing", Typing),
                 ("chimp", Chimp),
+                ("sequence", Sequence),
             )
         )
     )

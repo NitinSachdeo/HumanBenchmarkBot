@@ -9,6 +9,7 @@ from selenium import webdriver
 
 
 class Test(ABC):
+    tile_selector = "div.square"
     button_selector = ".css-de05nr.e19owgy710"
     save_button_selector = ".css-qm6rs9.e19owgy710"
     result_selector = ".css-1qvtbrk.e19owgy78"
