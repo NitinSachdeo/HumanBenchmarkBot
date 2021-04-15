@@ -25,7 +25,8 @@ class Verbal(Test):
         # Level loop
         # Add max since it's unable to read all squares to click around level 118
         words = set()
-        for i in range(1, self.max_level + 1):
+        rounds = 0
+        while True:
             sleep(0.1)
             word = self.browser.find_element_by_css_selector(self.word_selector).text
 
@@ -42,8 +43,12 @@ class Verbal(Test):
 
             if self.stop_pressed:
                 self.strikes -= 1
+                if self.strikes == 0:
+                    break
+            else:
+                rounds += 1
 
-            if self.strikes == 0:
-                break
+            if rounds == self.max_level:
+                self.stop_pressed = True
 
-        return i
+        return rounds
