@@ -18,6 +18,7 @@ from tests.chimp import Chimp
 from tests.sequence import Sequence
 from tests.number import Number
 from tests.verbal import Verbal
+from tests.aim import Aim
 
 
 # Constants
@@ -36,6 +37,7 @@ class Endpoints:  # as attributes instead of keys, I think it looks better :)
                 ("sequence", Sequence),
                 ("number-memory", Number),
                 ("verbal-memory", Verbal),
+                ("aim", Aim),
             )
         )
     )
