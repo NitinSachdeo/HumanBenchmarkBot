@@ -32,7 +32,7 @@ class Number(Test):
                     self.input_selector
                 )
 
-            if self.stop_pressed:
+            if self.stop_pressed or level == self.max_level:
                 input_form[0].send_keys("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
                 self.browser.find_element_by_css_selector(self.button_selector).click()
                 break
