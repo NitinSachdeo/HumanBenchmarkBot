@@ -14,6 +14,7 @@ from tests.test import Test
 from tests.memory import Memory
 from tests.reaction import Reaction
 from tests.typing import Typing
+from tests.chimp import Chimp
 
 
 # Constants
@@ -24,7 +25,12 @@ class Endpoints:  # as attributes instead of keys, I think it looks better :)
     test: str = "tests"
     test_list: OrderedDict[str, Test] = field(
         default_factory=lambda: OrderedDict(
-            (("memory", Memory), ("reactiontime", Reaction), ("typing", Typing))
+            (
+                ("memory", Memory),
+                ("reactiontime", Reaction),
+                ("typing", Typing),
+                ("chimp", Chimp),
+            )
         )
     )
 

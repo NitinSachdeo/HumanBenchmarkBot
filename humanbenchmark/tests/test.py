@@ -9,6 +9,8 @@ from selenium import webdriver
 
 
 class Test(ABC):
+    button_selector = ".css-de05nr.e19owgy710"
+
     def __init__(self, browser: webdriver.Chrome, console: Console):
         self.browser = browser
         self.console = console
@@ -18,6 +20,7 @@ class Test(ABC):
     def wait_for_stop_key(self, key="space"):
         keyboard.wait(key)
         self.stop_pressed = True
+        self.console.print("[red]Ending game![/red]")
 
     def detect_stop_thread(self, key="space"):
         thread = Thread(target=self.wait_for_stop_key, args=(key,))
