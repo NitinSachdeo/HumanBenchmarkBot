@@ -1,5 +1,7 @@
 """Class for typing test which involves typing out a given passage"""
 
+from time import sleep
+
 from .test import Test
 
 
@@ -13,6 +15,7 @@ class Typing(Test):
         passage = passage_div.text
         passage_div.send_keys(passage)
 
+        sleep(0.5)  # Wait for result elements to load
         wpm = self.browser.find_element_by_css_selector(self.result_selector).text
-        print(wpm)
-        return int(wpm[-3:])
+        self.console.print(wpm)
+        return int(wpm[:-3])

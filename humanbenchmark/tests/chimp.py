@@ -20,7 +20,6 @@ class Chimp(Test):
         # Level loop
         # Add max since it's unable to read all squares to click around level 118
         for level in range(self.start_level, self.max_level + 1):
-            self.console.print(f"Level: {level}")
             sleep(0.5)
             numbers = {}
             elements = self.browser.find_elements_by_css_selector(
