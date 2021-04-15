@@ -7,18 +7,21 @@ from .test import Test
 
 
 class Memory(Test):
+    tile_selector = "div.square-row div"
+    score_div_text_selector = "//div[starts-with(string(), '{0}') and @class='score']"
+
     def run(self):
         self.detect_stop_thread()
         self.console.print("Press spacebar at anytime to fail at next level...")
 
         # Click start button
-        self.browser.find_element_by_css_selector(".css-de05nr.e19owgy710").click()
+        self.browser.find_element_by_css_selector(self.button_selector).click()
 
         # Level loop
         # Add max since it's unable to read all squares to click around level 118
         for level in range(1, 101):
             sleep(0.5)  # Wait half a second for squares to light up
-            squares = self.browser.find_elements_by_css_selector("div.square-row div")
+            squares = self.browser.find_elements_by_css_selector(self.tile_selector)
 
             indicator = None
             for i, square in enumerate(squares):
@@ -36,7 +39,7 @@ class Memory(Test):
 
             level += 1
             level_div = self.browser.find_element_by_xpath(
-                "//div[starts-with(string(), 'Level:') and @class='score']"
+                self.score_div_text_selector.format("Level:")
             )
             # Wait till level counter increments
             while int(level_div.text.split(" ")[-1]) != level:
@@ -45,7 +48,6 @@ class Memory(Test):
             if self.stop_pressed:
                 break
 
-        self.console.print("[red]Ending game![/red]")
         self.fail()
 
         return level
@@ -77,7 +79,7 @@ class Memory(Test):
                 return
 
             lives_div = self.browser.find_element_by_xpath(
-                "//div[starts-with(string(), 'Lives:') and @class='score']"
+                self.score_div_text_selector.format("Lives:")
             )
             # Wait till lives decrement
             while int(lives_div.text.split(" ")[-1]) != lives:
