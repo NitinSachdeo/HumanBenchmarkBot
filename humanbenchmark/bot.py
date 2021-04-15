@@ -13,6 +13,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from tests.test import Test
 from tests.memory import Memory
 from tests.reaction import Reaction
+from tests.typing import Typing
 
 
 # Constants
@@ -23,7 +24,7 @@ class Endpoints:  # as attributes instead of keys, I think it looks better :)
     test: str = "tests"
     test_list: OrderedDict[str, Test] = field(
         default_factory=lambda: OrderedDict(
-            (("memory", Memory), ("reactiontime", Reaction))
+            (("memory", Memory), ("reactiontime", Reaction), ("typing", Typing))
         )
     )
 
