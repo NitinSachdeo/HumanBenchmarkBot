@@ -15,8 +15,8 @@ class Memory(Test):
         self.browser.find_element_by_css_selector(".css-de05nr.e19owgy710").click()
 
         # Level loop
-        level = 1
-        while not self.stop_pressed:
+        # Add max since it's unable to read all squares to click around level 118
+        for level in range(1, 101):
             sleep(0.5)  # Wait half a second for squares to light up
             squares = self.browser.find_elements_by_css_selector("div.square-row div")
 
@@ -41,6 +41,9 @@ class Memory(Test):
             # Wait till level counter increments
             while int(level_div.text.split(" ")[-1]) != level:
                 sleep(0.1)
+
+            if self.stop_pressed:
+                break
 
         self.console.print("[red]Ending game![/red]")
         self.fail()
