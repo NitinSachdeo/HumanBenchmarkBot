@@ -44,7 +44,6 @@ class Sequence(Test):
 
             # Check for stop code before starting to write out pattern
             if self.stop_pressed:
-                self.fail()
                 break
 
             # Update console with newest sequence digit
@@ -53,6 +52,8 @@ class Sequence(Test):
             for i in sequence:
                 sleep(0.1)
                 tiles[i].click()
+
+        self.fail()
 
         return level
 
