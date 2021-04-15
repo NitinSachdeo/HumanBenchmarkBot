@@ -11,7 +11,7 @@ class Reaction(Test):
 
     def run(self):
         self.detect_stop_thread()
-        self.console.print("Press spacebar at anytime to fail at next level...")
+        self.console.print("Press spacebar at anytime to return to test select...")
 
         # Select reaction area and click to start test
         area = self.browser.find_element_by_css_selector(self.area_selector)
