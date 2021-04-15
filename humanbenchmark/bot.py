@@ -102,7 +102,7 @@ class Bot:
             ).click()
 
             sleep(1)
-            error = self.browser.find_element_by_css_selector(".login-error-message")
+            error = self.browser.find_elements_by_css_selector(".login-error-message")
 
             if not error:
                 self.console.print(
