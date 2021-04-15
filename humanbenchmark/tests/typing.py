@@ -13,6 +13,6 @@ class Typing(Test):
         passage = passage_div.text
         passage_div.send_keys(passage)
 
-        wpm = self.browser.find_element_by_css_selector(".css-1qvtbrk.e19owgy78").text
+        wpm = self.browser.find_element_by_css_selector(self.result_selector).text
         print(wpm)
         return int(wpm[-3:])
