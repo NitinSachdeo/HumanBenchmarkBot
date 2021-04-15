@@ -24,7 +24,8 @@ class Test(ABC):
         thread.start()
 
     def start(self):
-        self.run()
+        if not self.run():
+            return
 
         save = (
             self.console.input(
