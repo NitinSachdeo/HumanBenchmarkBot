@@ -3,10 +3,7 @@ grid blink and repeating the pattern after"""
 
 from time import sleep
 
-from selenium.common.exceptions import (
-    ElementNotInteractableException,
-    StaleElementReferenceException,
-)
+from selenium.common.exceptions import NoSuchElementException
 
 from .test import Test
 
@@ -58,11 +55,9 @@ class Sequence(Test):
         return level
 
     def fail(self):
-        tile = self.browser.find_element_by_css_selector(self.tile_selector)
-
         try:  # Click until element is no longer available to click
             while True:
-                tile.click()
                 sleep(0.1)
-        except (ElementNotInteractableException, StaleElementReferenceException):
+                self.browser.find_element_by_css_selector(self.tile_selector).click()
+        except NoSuchElementException:
             pass
