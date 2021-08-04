@@ -139,15 +139,15 @@ class Bot:
                 self.console.print("[red]Invalid number[/red]")
                 return False
 
-            selected_text = list(ENDPOINTS.test_list.keys())[selected_index - 1]
+            selected_test = list(ENDPOINTS.test_list.keys())[selected_index - 1]
         elif selected_test not in ENDPOINTS.test_list.keys():
             self.console.print(f"[red]No test named {selected_test} available[/red]")
             return False
 
-        self.browser.get(f"{URL}/{ENDPOINTS.test}/{selected_text}")
+        self.browser.get(f"{URL}/{ENDPOINTS.test}/{selected_test}")
 
         # Spawn test handler in seperate thread and wait for esc to cancel or return
-        test_instance = ENDPOINTS.test_list[selected_text](self.browser, self.console)
+        test_instance = ENDPOINTS.test_list[selected_test](self.browser, self.console)
         test_instance.start()
         del test_instance
 
